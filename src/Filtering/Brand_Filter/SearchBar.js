@@ -15,7 +15,7 @@ const SearchBar = ({searchQuery, setSearchQuery}) => {
    const classes = useStyle();
    return (
       <form action="/" method = "get">
-         <input value = {searchQuery} onInput = {e => setSearchQuery(e.target.value)} type="text" id = "brandSearch" name = "brandSearch" placeholder = "Search Brand" className = {classes.searchbar}/>
+         <input value = {searchQuery} onInput = {e => {setSearchQuery(e.target.value)}} type="text" id = "brandSearch" name = "brandSearch" placeholder = "Search Brand" className = {classes.searchbar}/>
       </form>
    );
 }

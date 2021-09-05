@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from "react-redux";
 
 import { FILTER_TAG } from "../../Reducer/actions";
 
-const Tag = ({tagName, isChecked, index, tagCount, filter}) => {
+const Tag = ({tagName, isChecked, index, tagCount, filter, allChecked, setAllChecked}) => {
    const [isCheckedState, setIsCheckedState] = useState(isChecked);
+
+   const handleChange = () => {
+      setIsCheckedState(!isCheckedState);
+      setAllChecked(false);
+   }
+
+   useEffect(() => {
+      if ( allChecked )
+         setIsCheckedState(false);
+   },[allChecked]);
 
    return (
       <FormControlLabel  
       control = {<Checkbox 
                      checked = {isCheckedState}
                      onChange = {
-                        () => {setIsCheckedState(!isCheckedState); filter()}
-                     }/>} 
+                        () => {handleChange(); filter()}} 
+                        color = "primary"/>} 
       label = {tagName + " (" + tagCount[index] + ")"}/>
    );
 

@@ -4,17 +4,22 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
-import Snackbar from '@material-ui/core/Snackbar';
 import { connect } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import clsx from 'clsx';
+import ErrorIcon from '@material-ui/icons/Error';
 
 import Item from "./Item";
 
 const useStyles = makeStyles({ 
    container: {
+      
       width: "608px",
       height: "1096px",
       borderRadius: "2px",
-      
+      "@media screen and (max-width: 720px)": {
+         width: "500px",  
+      },
    },
    header: {
       fontFamily: "Open Sans",
@@ -35,7 +40,6 @@ const useStyles = makeStyles({
       padding: "20px",
       background: "#FFFFFF",
       margin: "0 auto",
-      //justifyContent: "space-between",
    },
    pagination: {
       width: "550px",
@@ -75,6 +79,32 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
       setPage(1);
    }
 
+   const renderComponents = () => {
+      if ( products.length === 0 )
+         return <CircularProgress color="secondary" />
+      else if ( filteredArray.length === 0 )
+         return (
+            <Box className = {classes.item_container} style = {{color: "#FF2400",}}>
+               <Box style = {{marginRight: "10px"}}><ErrorIcon style = {{fontSize: "24px",}}/></Box>
+               <div style = {{marginTop: "2px"}}>There are no products matching the filters!</div> 
+            </Box>
+         );
+      else 
+         return (
+            <Box className = {classes.item_container}>
+               { 
+                  filteredArray.filter((item) => item.type === isMug).map((product, index) => {
+                        
+                     if ( index >= ((page - 1) * pageSize) && index < (page * pageSize)) {
+                        return (
+                           <Item key = {index} {...product} handleClickVariant = {handleClickVariant}/>
+                        );
+                     }
+                     return;
+                  })}       
+            </Box>
+         );
+   }
    return (
          <ThemeProvider theme = {theme}>
             <Box className = {classes.container}>
@@ -83,18 +113,9 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
                   <Button className = {classes.button} onClick = {handleMug} color = "primary" variant = "contained">Mug</Button>
                   <Button className = {classes.button} onClick = {handleShirt} color = "primary" variant = "contained">Shirt</Button>
                </Box>
-               <Box className = {classes.item_container}>
-                  { 
-                     filteredArray.filter((item) => item.type === isMug).map((product, index) => {
-                        
-                        if ( index >= ((page - 1) * pageSize) && index < (page * pageSize)) {
-                           return (
-                              <Item key = {index} {...product} handleClickVariant = {handleClickVariant}/>
-                           );
-                        }
-                        return;
-                  })}       
-               </Box>
+               
+                  { renderComponents() } 
+               
                <Box className = {classes.pagination}>
                   <Pagination style = {{marginBottom: "100px"}} size="large" count = {Math.ceil(filteredArray.filter((product) => product.type === isMug).length / pageSize)} page = {page} onChange = {handleChange} color = "primary" shape = "rounded" showFirstButton showLastButton/>
                </Box>

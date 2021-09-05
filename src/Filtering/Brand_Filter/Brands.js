@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import clsx from 'clsx';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 //------CHECKBOX IMPORTS------\\
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -10,9 +10,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 //---END OF CHECKBOX IMPORTS---\\
 
 import Brand from "./Brand";
-import SearchBar from './SearchBar';
 
 import { connect } from "react-redux";
+import { SHOW_ALL_BRAND } from "../../Reducer/actions";
 
 const useStyle = makeStyles({
    //Headers
@@ -38,31 +38,44 @@ const useStyle = makeStyles({
       display: "flex",
       flexDirection: "column",
    },
+   searchbar: {
+      height: "44px",
+      width: "244px",
+      border: "2px solid #E0E0E0",
+      borderRadius: "2px",
+      marginTop: "24px",
+      marginBottom: "10px",
+      marginLeft: "24px",
+   },
    scrollbar: {
       width: "248px",
       maxHeight: "142px",
       overflowY: "scroll",
       margin: "0 auto",
+      fontFamily: "Open Sans",
+      fontSize: "13px",
+      color: "#697488",
    },
    "*": {
       scrollbarWidth: "thin",
       scrollbarColor: "#E0E0E0",
    },
 });
-const Brands = ({companies, companyCount, products}) => {
+const Brands = ({companies, companyCount, products, dispatch}) => {
    const classes = useStyle();
    
    const { search } = window.location;
    const query = new URLSearchParams(search).get("brandSearch");
    const [searchQuery, setSearchQuery] = useState(query || "");
-
+   const [allChecked, setAllChecked] = useState(true);
+   const [showCount, setShowCount] = useState([...companyCount]);
 
    const filterBrands = ( companies, query ) => {
       if (!query) {
          return companies;
       }
 
-      return companies.filter((company) => {
+      return companies.filter((company, index) => {
          const companyName = company.name.toLowerCase();
          return companyName.includes(query);
       });
@@ -70,21 +83,33 @@ const Brands = ({companies, companyCount, products}) => {
 
    const filteredCompanies = filterBrands( companies, searchQuery );
    
+   const renderComponent = () => {
+      if ( companyCount.length === 0 )
+         return <CircularProgress color="primary" />
+      else {
+         return (
+            <div>
+               <input value = {searchQuery} onInput = {e => {setSearchQuery(e.target.value)}} type="text" id = "brandSearch" name = "brandSearch" placeholder = "Search Brand" className = {classes.searchbar}/>
+               <Box className = {clsx(classes.scrollbar, classes['*'])}>
+                  <FormGroup >
+                     <FormControlLabel control = {<Checkbox checked = {allChecked} onChange = {() => {dispatch({type: SHOW_ALL_BRAND}); setAllChecked(!allChecked)}} color = "primary"/>} label = { "All (" + products.length + ")"} />
+                     {filteredCompanies.map((company, index) => {
+                        return (
+                           <Brand key = {index} {...company} allChecked = {allChecked} setAllChecked = {setAllChecked}/>
+                        );
+                     })} 
+                  </FormGroup>
+               </Box>
+            </div>
+            
+         );
+      }
+   }
    return (
       <Box className = {classes.outer_box_brands}>
          <div className = {classes.header}>Brands</div>
          <Box className = {classes.inner_box_brands}>
-            <SearchBar searchQuery = {searchQuery} setSearchQuery = {setSearchQuery}/>
-            <Box className = {clsx(classes.scrollbar, classes['*'])}>
-               <FormGroup >
-                  <FormControlLabel control = {<Checkbox defaultChecked color = "primary"/>} label = { "All (" + products.length + ")"} />
-                  {filteredCompanies.map((company, index) => {
-                     return (
-                        <Brand key = {index} {...company} index = {index} />
-                     );
-                  })} 
-               </FormGroup>
-            </Box>
+            { renderComponent() }
          </Box>
       </Box>
    );

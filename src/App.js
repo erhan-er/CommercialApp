@@ -17,23 +17,25 @@ import reducer from "./Reducer/reducer";
 document.body.style = "background: #E5E5E5;";
 const useStyles = makeStyles({
   content: {
-    width: "1440px",
+    width: "100%",
     margin: "0 auto",
     marginTop: "38.36px",
     background: "#E5E5E5",
   },
   box: {
-    width: "1232px",
+    width: "90%",
     margin: "0 auto",
     display: "flex",
     justifyContent: "space-between",
     marginTop: "0px",
 
-    "@media screen and (max-width: 1280px)": {
-      width: "920px",
+    "@media screen and (max-width: 1440px)": {
+      justifyContent: "space-evenly",
     },
-    "@media screen and (max-width: 720px)": {
-      width: "640px",
+    "@media screen and (max-width: 1280px)": {
+      flexDirection: "row",
+    },
+    "@media screen and (max-width: 1080px)": {
       display: "block"
     }
   },
@@ -57,8 +59,8 @@ function App() {
     tags: tags,
     companyCount: companyCount,
     tagCount: tagCount,
-    isBasketEmpty: true,
     filteredArray: [...products],
+    basket: [],
   };
   
 
@@ -111,7 +113,7 @@ function App() {
       
       let uniqueTags = [...new Set(tagArr)]; // DELETE THE DUPLICATE TAGS
       uniqueTags.sort(); // SORT TAGS BY THEIR NAME
-      let newTag = uniqueTags.map((tag) => { return { tagName: tag, isChecked: false }});
+      let newTag = uniqueTags.map((tag, index) => { return { tagName: tag, isChecked: false, index: index }});
 
       setTagCount( new Array(uniqueTags.length).fill(0));
 
@@ -141,7 +143,11 @@ function App() {
 
       sortOn(companyArr, "name"); // SORT COMPANIES BY THEIR NAME
 
-      setCompanies(companyArr);
+      let newCompanies = companyArr.map((company, index) => {
+        return {...company, index: index}
+      });
+
+      setCompanies(newCompanies);
     });
   };
 
@@ -149,7 +155,7 @@ function App() {
 
   useEffect(() => {
     getProducts();
-    getCompanies();
+    getCompanies(); 
   },[]);
   
   useEffect(() => {
@@ -160,8 +166,7 @@ function App() {
         if ( products[i].manufacturer === companies[j].slug ) {
           let newNumber = counts[j];
           newNumber = newNumber + 1;
-          counts[j] = newNumber;
-          
+          counts[j] = newNumber; 
         }
       }
     }
@@ -193,18 +198,18 @@ function App() {
   };
 
   return (
-      <Provider store = {store}>
-        <Box>
-          <Navbar/>
-          <Box className = {classes.content}>
-            <Box className = {classes.box}>
-              <Filtering/>
-              <Items handleClickVariant = {handleClickVariant}/>
-              <Basket/>
+        <Provider store = {store}>
+          <Box>
+            <Navbar/>
+            <Box className = {classes.content} >
+              <Box className = {classes.box}>
+                <Filtering style = {{zIndex: "-1"}}/>
+                <Items handleClickVariant = {handleClickVariant} style = {{zIndex: "-1"}}/>
+                <Basket/>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </Provider>
+        </Provider>
   );
 }
 

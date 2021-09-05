@@ -24,19 +24,19 @@ const useStyle = makeStyles({
    //Sorting Box
    outer_box_sorting: {
       width: "296px",
-      height: "214px",
+      height: "274px",
       marginBottom: "24px",
    },
    inner_box_sorting: {
       width: "296px",
-      height: "184px",
+      height: "244px",
       borderRadius: "2px",
       boxShadow: "0px 6px 24px rgba(93, 62, 188, .04)",
       background: "#fff",
       alignItems: "center",
    },
    sorting_radio: {      
-      paddingTop: "8px",
+      paddingTop: "30px",
       paddingLeft: "24px",
    },
    sorting_radio_label: {
