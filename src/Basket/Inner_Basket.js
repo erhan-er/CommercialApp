@@ -85,7 +85,7 @@ const useStyle = makeStyles({
    button_group: {
       marginTop: "6.5px",
       position: "absolute",
-      right: "10px",
+      right: "1px",
       alignItems: "center",
    },
    button: {

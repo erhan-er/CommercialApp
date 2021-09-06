@@ -38,7 +38,7 @@ const useStyle = makeStyles({
       alignItems: "center",
    },
    sorting_radio: {      
-      paddingTop: "30px",
+      paddingTop: "35px",
       paddingLeft: "24px",
    },
    sorting_radio_label: {
