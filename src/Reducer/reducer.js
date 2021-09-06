@@ -1,5 +1,5 @@
 // ACTION TYPE \\
-import { INCREASE, DECREASE, ADD_ITEM, FILTER_SORT, FILTER_BRAND, FILTER_TAG, SHOW_ALL_BRAND, SHOW_ALL_TAG } from "./actions";
+import { INCREASE, DECREASE, ADD_ITEM, FILTER_SORT, FILTER_BRAND, FILTER_TAG, SHOW_ALL_BRAND, SHOW_ALL_TAG, DELETE_ITEM, DELETE_ALL } from "./actions";
 
 // ACTION PAYLOAD \\
 import { LOW_TO_HIGH, HIGH_TO_LOW, NEW_TO_OLD, OLD_TO_NEW } from "./actions";
@@ -25,7 +25,7 @@ function reducer(state, action) {
 
    // DECREASE THE AMOUNT OF THE ITEM
    if ( action.type === DECREASE ) {
-
+      
       let newTotal = state.total; // GET THE CURRENT TOTAL
       let newProducts = state.products.map((product) => { // CREATE A NEW PRODUCTS ARRAY
          if ( product.id === action.payload.id ) {
@@ -35,9 +35,16 @@ function reducer(state, action) {
          return product;
       });
 
-      let newBasket = newProducts.filter((product) => product.amount > 0) // CREATE A NEW BASKET ARRAY
+      let newBasket = state.basket.map((product) => {
+         if ( product.id === action.payload.id ) {
+            product = {...product, amount: product.amount - 1}
+         }
+         return product;
+      });
+
+      let resultBasket = newBasket.filter((product) => product.amount > 0);
       
-      return {...state, products: newProducts, basket: newBasket, total: newTotal}
+      return {...state, products: newProducts, basket: resultBasket, total: newTotal}
    }
 
    // INCREASE THE AMOUNT OF THE ITEM
@@ -60,6 +67,43 @@ function reducer(state, action) {
       });
 
       return {...state, products: newProducts, basket: newBasket, total: newTotal};
+   }
+
+   // DELETE ITEM
+   if ( action.type === DELETE_ITEM ) {
+      let newTotal = state.total; // GET THE CURRENT TOTAL
+      let newProducts = state.products.map((product) => { // CREATE A NEW PRODUCTS ARRAY
+         if ( product.id === action.payload.id ) {
+            newTotal = newTotal - product.price * product.amount;
+            product = {...product, amount: 0}            
+         }
+         return product;
+      });
+
+      let newBasket = state.basket.map((product) => {
+         if ( product.id === action.payload.id ) {
+            product = {...product, amount: 0}
+         }
+         return product;
+      });
+
+      let resultBasket = newBasket.filter((product) => product.amount > 0);
+
+      return {...state, products: newProducts, basket: resultBasket, total: newTotal}
+   }
+
+   if ( action.type === DELETE_ALL ) {
+
+      let newProducts = [];
+
+      newProducts = state.products.map((product) => {
+         product = {...product, amount: 0}
+
+         return product;
+      });
+
+
+      return {...state, products: newProducts, basket: [], total: 0}
    }
 
    // ADD ITEM TO BASKET
@@ -107,7 +151,6 @@ function reducer(state, action) {
       if ( newProducts.length === 0 )
          newProducts = [...state.products];
 
-      console.log(newBasket);
       return {...state, products: newProducts, basket: newBasket, total: newTotal}
    }
 

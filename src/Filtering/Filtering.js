@@ -12,6 +12,7 @@ const useStyle = makeStyles({
    filtering_box: {
       
       "@media screen and (max-width: 1080px)": {
+         width: "100%",
          display: "flex",
          justifyContent: "space-evenly",
          flexFlow: "row wrap",

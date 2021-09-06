@@ -63,6 +63,9 @@ const useStyles = makeStyles({
          display: "block",
          right: "100px",
          top: "100px",
+      },
+      "@media screen and ( max-width: 640px)": {
+         right: "10px",
       }
    }
 });

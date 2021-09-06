@@ -24,22 +24,30 @@ const useStyles = makeStyles({
     background: "#E5E5E5",
   },
   box: {
-    width: "90%",
+    width: "95%",
     margin: "0 auto",
     display: "flex",
     justifyContent: "space-between",
     marginTop: "0px",
 
-    "@media screen and (max-width: 1440px)": {
-      justifyContent: "space-evenly",
+    
+    "@media screen and (max-width: 1280px)": {
+      flexDirection: "row",
     },
+    "@media screen and (max-width: 1100px)": {
+      display: "block"
+    }
+  },
+  item_sort: {
+    display: "flex",
     "@media screen and (max-width: 1280px)": {
       flexDirection: "row",
     },
     "@media screen and (max-width: 1080px)": {
-      display: "block"
+      display: "block",
+      margin: "0 auto"
     }
-  },
+  }
 });
 
 function App() {
@@ -204,8 +212,10 @@ function App() {
             <Navbar/>
             <Box className = {classes.content} >
               <Box className = {classes.box}>
-                <Filtering style = {{zIndex: "-1"}}/>
-                <Items handleClickVariant = {handleClickVariant} style = {{zIndex: "-1"}}/>
+                <Box className = {classes.item_sort}>
+                  <Filtering style = {{zIndex: "-1"}}/>
+                  <Items handleClickVariant = {handleClickVariant} style = {{zIndex: "-1"}}/>
+                </Box>
                 <Basket/>
               </Box>
             </Box>

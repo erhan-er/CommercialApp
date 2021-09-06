@@ -6,15 +6,17 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import ErrorIcon from '@material-ui/icons/Error';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 // OTHER IMPORTS \\
 import { connect } from "react-redux";
-import { DECREASE, INCREASE } from "../Reducer/actions";
+import { DECREASE, INCREASE, DELETE_ITEM, DELETE_ALL } from "../Reducer/actions";
 import clsx  from "clsx";
 
 const useStyle = makeStyles({
    box: {
-      width: "296px",
+      width: "400px",
       background: "#FFF",
       borderRadius: "2px",
       display: "flex",
@@ -25,7 +27,7 @@ const useStyle = makeStyles({
    },
    scrollbar: {
       marginTop: "10px",
-      width: "280px",
+      width: "90%",
       maxHeight: "500px",
       overflowY: "scroll",
       margin: "0 auto",
@@ -36,7 +38,7 @@ const useStyle = makeStyles({
    },
    item_box: {
       position: "relative",
-      width: "90%",
+      width: "100%",
       borderBottom: "1px solid #F4F4F4",
       display: "flex",
       flexDirection: "row",
@@ -85,12 +87,18 @@ const useStyle = makeStyles({
    button_group: {
       marginTop: "6.5px",
       position: "absolute",
-      right: "1px",
+      right: "50px",
       alignItems: "center",
    },
    button: {
       width: "32px",
       height: "32.7px",
+   },
+   delete_button: {
+      marginTop: "6.5px",
+      position: "absolute",
+      right: "5px",
+      color: "#ff0000"
    },
    total_outer_box: {
       position: "relative",
@@ -103,7 +111,7 @@ const useStyle = makeStyles({
       right: "16px",
       bottom: "4.35px",
       minWidth: "100px",
-      height: "51.1px",
+      height: "50px",
       border: "2px solid #1EA4CE",
       borderRadius: "2px",
       display: "flex",
@@ -117,6 +125,15 @@ const useStyle = makeStyles({
       lineHeight: "16px",
       margin: "0 auto",
    },
+   clear_all: {
+      position: "absolute",
+      width: "150px",
+      height: "50px",
+      left: "16px",
+      bottom: "4.35px",
+      color: "white",
+      background: "#FF3232"
+   }
 });
 
 const Inner_Basket = ({products, basket, total, dispatch}) => {
@@ -152,6 +169,9 @@ const Inner_Basket = ({products, basket, total, dispatch}) => {
                                  <Button className = {classes.button} style = {{background: "#1EA4CE", color: "#fff", border: "0px"}} variant = "contained" disabled>{product.amount}</Button>
                                  <Button className = {classes.button} onClick = {() => dispatch({type: INCREASE, payload: {id: product.id}})}><AddIcon/></Button>
                               </ButtonGroup>
+                              <IconButton aria-label="delete" className={classes.delete_button} onClick = {() => {dispatch({type: DELETE_ITEM, payload: {id: product.id}})}}>
+                                 <DeleteIcon fontSize="small"/>
+                              </IconButton>
                            </Box>
                         </Box>
                   );
@@ -161,7 +181,11 @@ const Inner_Basket = ({products, basket, total, dispatch}) => {
                   <Box className = {classes.total_inner_box}>
                      <p className = {classes.total}>₺ {(total.toFixed(2) === "-0.00" ?  "0.00" : total.toFixed(2))}</p>
                   </Box>
+                  <Button className = {classes.clear_all} variant="contained"  startIcon={<DeleteIcon />} onClick = {() => dispatch({type: DELETE_ALL})}>
+                     Clear All
+                  </Button>
                </Box>
+               
             </Box> 
          );
       }

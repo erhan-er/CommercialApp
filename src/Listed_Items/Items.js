@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorIcon from '@material-ui/icons/Error';
 
 // OTHER IMPORTS \\
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 
@@ -17,11 +17,17 @@ import Item from "./Item";
 
 const useStyles = makeStyles({ 
    container: {
-      width: "608px",
+      width: "640px",
       height: "1096px",
       borderRadius: "2px",
+      marginLeft: "20px",
+      
+      "@media screen and (max-width: 860px)": {
+         width: "80%",
+      },
       "@media screen and (max-width: 720px)": {
-         width: "100%",  
+         width: "85%",
+         marginLeft: "0px"
       },
    },
    header: {
@@ -41,15 +47,16 @@ const useStyles = makeStyles({
    },
    item_container: {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
       flexFlow: "row wrap",
       padding: "20px",
       background: "#FFFFFF",
       margin: "0 auto",
    },
    pagination: {
-      width: "550px",
-      margin: "20px 45px 100px",
+      margin: "10px",
+      display: "flex",
+      justifyContent: "center",
       
    },
    
@@ -74,6 +81,7 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
    const [page, setPage] = useState(1); // PAGE NUMBER
    const [pageSize, setPageSize] = useState(16); // NUMBER OF ITEMS SHOWED ON THE SCREEN
    const [isMug, setIsMug] = useState("mug"); // MUG-SHIRT FILTER
+   const [size, setSize] = useState(window.innerWidth);
 
    const handleChange = (event, value) => { // CHANGE THE PAGE NUMBER
       setPage(value);
@@ -88,6 +96,17 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
       setIsMug("shirt");
       setPage(1);
    }
+
+   const checkSize = () => {
+      setSize(window.innerWidth);
+   }
+
+   useEffect (() => {
+      window.addEventListener("resize", checkSize);
+      return () => {
+         window.removeEventListener("resize", checkSize);
+      };
+   });
 
    const renderComponents = () => { 
       if ( products.length === 0 ) // WAIT UNTIL PRODUCTS ARRAY IS READY
@@ -127,7 +146,7 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
                   { renderComponents() } 
                
                <Box className = {classes.pagination}>
-                  <Pagination style = {{marginBottom: "100px"}} size="large" count = {Math.ceil(filteredArray.filter((product) => product.type === isMug).length / pageSize)} page = {page} onChange = {handleChange} color = "secondary" shape = "rounded" showFirstButton showLastButton/>
+                  <Pagination style = {{marginBottom: "100px"}} size = { ( size > 720 ) ? "large" : "small"} count = {Math.ceil(filteredArray.filter((product) => product.type === isMug).length / pageSize)} page = {page} onChange = {handleChange} color = "secondary" shape = "rounded" showFirstButton showLastButton/>
                </Box>
             </Box>
          </ThemeProvider>

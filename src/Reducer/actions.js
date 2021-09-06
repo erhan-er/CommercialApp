@@ -7,6 +7,8 @@ export const FILTER_BRAND = "FILTER_BRAND";
 export const FILTER_TAG = "FILTER_TAG";
 export const SHOW_ALL_BRAND = "SHOW_ALL_BRAND";
 export const SHOW_ALL_TAG = "SHOW_ALL_TAG";
+export const DELETE_ITEM = "DELETE_ITEM";
+export const DELETE_ALL = "DELETE_ALL";
 
 // ACTION PAYLOAD \\
 export const LOW_TO_HIGH = "LOW_TO_HIGH";
