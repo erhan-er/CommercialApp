@@ -65,18 +65,44 @@ function reducer(state, action) {
    // ADD ITEM TO BASKET
    if ( action.type === ADD_ITEM ) {
       let newTotal = state.total; // GET THE CURRENT TOTAL
-      let newBasket = [...state.basket]; // CREATE A NEW BASKET ARRAY
+      let newBasket = []; // CREATE A NEW BASKET ARRAY
       let newProducts = []; // CREATE A NEW PRODUCTS ARRAY
 
-      newProducts = state.products.map((product) => { // FIND THE ADDED ITEM, ADD ITS PRICE TO TOTAL AND PUSH IT TO BASKET ARRAY
-         if ( product.id === action.payload.ownProps.id ) {
-            newTotal = newTotal + product.price;
-            product = {...product, amount: product.amount + 1};
-            newBasket.push( product );
-         }
-         return product;
-      });
+      
 
+      let bool = false;
+      for ( let i = 0; i < state.basket.length; i++ ) {
+         if ( action.payload.ownProps.id === state.basket[i].id ) 
+            bool = true; 
+      }
+
+      if ( bool ) {
+         newBasket = state.basket.map((product) => {
+            if ( product.id === action.payload.ownProps.id ) {
+               product = {...product, amount: product.amount + 1}
+            }
+            return product;
+         });
+         newProducts = state.products.map((product) => { // FIND THE ADDED ITEM, ADD ITS PRICE TO TOTAL AND PUSH IT TO BASKET ARRAY
+            if ( product.id === action.payload.ownProps.id ) {
+               newTotal = newTotal + product.price;
+               product = {...product, amount: product.amount + 1};
+            }
+            return product;
+         });
+      }
+      else {
+         newBasket = [...state.basket];
+         newProducts = state.products.map((product) => { // FIND THE ADDED ITEM, ADD ITS PRICE TO TOTAL AND PUSH IT TO BASKET ARRAY
+            if ( product.id === action.payload.ownProps.id ) {
+               newTotal = newTotal + product.price;
+               product = {...product, amount: product.amount + 1};
+               newBasket.push( product );
+            }
+            return product;
+         });
+      }
+      
       // CHECK IF THE NEW PRODUCTS ARRAY IS EMPTY OR NOT
       if ( newProducts.length === 0 )
          newProducts = [...state.products];

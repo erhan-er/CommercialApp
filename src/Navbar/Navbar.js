@@ -20,7 +20,6 @@ const useStyles = makeStyles({
       marginBottom: "0px",
       display: "flex",
       justifyContent: "center",
-      position: "relative",
    },
 
    market: {
@@ -82,7 +81,7 @@ const Navbar = ({total}) =>{
          <img className = {classes.market} src={Market} alt="Market" />
          <Button onClick = {() => handleBasket()} className = {classes.basket}> 
             <img src={BasketIcon} />
-            <div className = {classes.total}>₺ {total.toFixed(2)}</div> 
+            <div className = {classes.total}>₺ {(total.toFixed(2) === -0.00 ? -total.toFixed(2) : total.toFixed(2))}</div> 
          </Button>
          { showBasket ?  ( <Box className = {classes.show_basket} style = {{zIndex: "1"}}><InnerBasket/></Box>) : <Box/>}
       </Box>

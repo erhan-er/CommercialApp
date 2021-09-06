@@ -71,7 +71,6 @@ const Brands = ({companies, companyCount, products, dispatch}) => {
    const query = new URLSearchParams(search).get("brandSearch");
    const [searchQuery, setSearchQuery] = useState(query || "");
    const [allChecked, setAllChecked] = useState(true);
-   const [showCount, setShowCount] = useState([...companyCount]);
 
    const filterBrands = ( companies, query ) => {
       if (!query) {
