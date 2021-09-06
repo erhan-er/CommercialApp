@@ -159,7 +159,7 @@ const Inner_Basket = ({products, basket, total, dispatch}) => {
                </Box>
                <Box className = {classes.total_outer_box}>
                   <Box className = {classes.total_inner_box}>
-                     <p className = {classes.total}>₺ {(total.toFixed(2) === -0.00 ? -total.toFixed(2) : total.toFixed(2))}</p>
+                     <p className = {classes.total}>₺ {(total.toFixed(2) === "-0.00" ?  "0.00" : total.toFixed(2))}</p>
                   </Box>
                </Box>
             </Box> 
