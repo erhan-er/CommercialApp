@@ -9,21 +9,21 @@ import  { FILTER_BRAND } from "../../Reducer/actions"
 
 const Brand = ({id, slug, name, address, city, state, zip, account, contact, isChecked, index, filter, companyCount, allChecked, setAllChecked}) => {
 
-   const [isCheckedState, setIsCheckedState] = useState(isChecked);
+   const [isCheckedState, setIsCheckedState] = useState(false);
 
    const handleChange = () => {
-      setIsCheckedState(!isCheckedState);
       setAllChecked(false);
    }
-
+   
    useEffect(() => { // IF ALL CHECKED, THEN UNCHECK OTHER FILTERS
       if ( allChecked )
          setIsCheckedState(false);
    },[allChecked]);
+
    return (
       <FormControlLabel 
          control = {<Checkbox 
-                        checked = {isCheckedState} 
+                        checked = {isChecked} 
                         onChange = {() => {filter(); handleChange()}} color="primary"/>} 
          label = { slug + " (" + companyCount[index] + ")"}/>
    );

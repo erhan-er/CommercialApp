@@ -79,7 +79,7 @@ const Brands = ({companies, companyCount, products, dispatch}) => {
 
       return companies.filter((company, index) => {
          const companyName = company.name.toLowerCase();
-         return companyName.includes(query);
+         return companyName.includes(query.toLowerCase());
       });
    }
 

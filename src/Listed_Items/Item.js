@@ -16,7 +16,8 @@ const useStyle = makeStyles({
       width: "124px",
       marginBottom: "22px",
       fontFamily: "Open Sans",
-      
+      marginRight: "5px",
+      marginleft: "5px",
    },
    img_box: {
       height: "124px",

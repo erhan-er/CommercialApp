@@ -8,10 +8,9 @@ import { connect } from "react-redux";
 import { FILTER_TAG } from "../../Reducer/actions";
 
 const Tag = ({tagName, isChecked, index, tagCount, filter, allChecked, setAllChecked}) => {
-   const [isCheckedState, setIsCheckedState] = useState(isChecked);
+   const [isCheckedState, setIsCheckedState] = useState(false);
 
    const handleChange = () => {
-      setIsCheckedState(!isCheckedState);
       setAllChecked(false);
    }
 
@@ -23,7 +22,7 @@ const Tag = ({tagName, isChecked, index, tagCount, filter, allChecked, setAllChe
    return (
       <FormControlLabel  
       control = {<Checkbox 
-                     checked = {isCheckedState}
+                     checked = {isChecked}
                      onChange = {
                         () => {handleChange(); filter()}} 
                         color = "primary"/>} 

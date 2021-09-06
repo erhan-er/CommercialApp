@@ -17,7 +17,7 @@ import Item from "./Item";
 
 const useStyles = makeStyles({ 
    container: {
-      width: "640px",
+      maxWidth: "640px",
       height: "1096px",
       borderRadius: "2px",
       marginLeft: "20px",
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
    },
    item_container: {
       display: "flex",
-      justifyContent: "space-between",
+      justifyContent: "space-around",
       flexFlow: "row wrap",
       padding: "20px",
       background: "#FFFFFF",
