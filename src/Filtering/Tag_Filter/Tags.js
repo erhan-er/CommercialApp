@@ -76,7 +76,7 @@ const Tags = ({tags, tagCount, products, dispatch}) => {
 
       return tags.filter((tag, index) => {
          const tagName = tag.tagName.toLowerCase();
-         return tagName.includes(query);
+         return tagName.includes(query.toLowerCase());
       });
    }
 
