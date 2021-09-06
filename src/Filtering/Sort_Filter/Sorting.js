@@ -28,6 +28,9 @@ const useStyle = makeStyles({
       "@media screen and (max-width: 1080px)": {
          width: "40%",
       },
+      "@media screen and (max-width: 720px)": {
+         width: "100%"
+      },
    },
    inner_box_sorting: {
       width: "296px",
@@ -36,6 +39,9 @@ const useStyle = makeStyles({
       boxShadow: "0px 6px 24px rgba(93, 62, 188, .04)",
       background: "#fff",
       alignItems: "center",
+      "@media screen and (max-width: 720px)": {
+         width: "100%"
+      },
    },
    sorting_radio: {      
       paddingTop: "35px",

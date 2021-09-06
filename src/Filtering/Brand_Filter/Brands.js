@@ -30,6 +30,9 @@ const useStyle = makeStyles({
       "@media screen and (max-width: 1080px)": {
          width: "40%",
       },
+      "@media screen and (max-width: 720px)": {
+         width: "100%"
+      },
    },
    inner_box_brands: {
       width: "296px",
@@ -39,6 +42,10 @@ const useStyle = makeStyles({
       background: "#fff",
       display: "flex",
       flexDirection: "column",
+      "@media screen and (max-width: 720px)": {
+         width: "100%"
+      },
+      
    },
    searchbar: {
       fontFamily: "Open Sans",
@@ -49,6 +56,9 @@ const useStyle = makeStyles({
       marginTop: "24px",
       marginBottom: "10px",
       marginLeft: "24px",
+      "@media screen and (max-width: 720px)": {
+         width: "90%"
+      },
    },
    scrollbar: {
       width: "248px",
@@ -58,6 +68,9 @@ const useStyle = makeStyles({
       fontFamily: "Open Sans",
       fontSize: "13px",
       color: "#697488",
+      "@media screen and (max-width: 720px)": {
+         width: "90%"
+      },
    },
    "*": {
       scrollbarWidth: "thin",
