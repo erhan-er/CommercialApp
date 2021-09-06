@@ -1,14 +1,14 @@
-import { useState } from "react";
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-//------CHECKBOX IMPORTS------\\
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
-//---END OF CHECKBOX IMPORTS---\\
 
+// OTHER IMPORTS \\
+import { useState } from "react";
+import clsx from 'clsx';
 import Tag from "./Tag";
 import { connect } from "react-redux";
 import { SHOW_ALL_TAG } from "../../Reducer/actions";
@@ -26,6 +26,9 @@ const useStyle = makeStyles({
    outer_box_tags: {
       width: "296px",
       height: "274px",
+      "@media screen and (max-width: 1080px)": {
+         width: "40%",
+      },
    },
    inner_box_tags: {
       width: "296px",
@@ -35,6 +38,7 @@ const useStyle = makeStyles({
       background: "#fff",
    },
    searchbar: {
+      fontFamily: "Open Sans",
       height: "44px",
       width: "244px",
       border: "2px solid #E0E0E0",
@@ -79,12 +83,12 @@ const Tags = ({tags, tagCount, products, dispatch}) => {
    const filteredTags = filterTags( tags, searchQuery );
    
    const renderComponent = () => {
-      if ( tagCount.length === 0 ) {
+      if ( tagCount.length === 0 ) { // WAIT UNTIL TAGCOUNT IS READY
          return <CircularProgress color="primary" />
       }
       else {
          return (
-            <div>
+            <Box className = {classes.inner_box_tags}>
                <input value = {searchQuery} onInput = {e => {setSearchQuery(e.target.value)}} type="text" id = "tagSearch" placeholder = "Search Tag" className = {classes.searchbar}/>
                <Box className = {clsx(classes.scrollbar, classes['*'])}>
                   <FormGroup>
@@ -96,16 +100,16 @@ const Tags = ({tags, tagCount, products, dispatch}) => {
                      })}
                   </FormGroup>
                </Box>
-            </div>   
+            </Box> 
          );
       }
    }
    return (
       <Box className = {classes.outer_box_tags}>
          <div className = {classes.header}>Tags</div>
-         <Box className = {classes.inner_box_tags}>
+         
             { renderComponent() }
-         </Box>
+         
       </Box>
    );
 }

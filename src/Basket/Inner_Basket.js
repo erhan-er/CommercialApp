@@ -1,3 +1,4 @@
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -13,7 +14,6 @@ import clsx  from "clsx";
 
 const useStyle = makeStyles({
    box: {
-      
       width: "296px",
       background: "#FFF",
       borderRadius: "2px",
@@ -122,12 +122,12 @@ const Inner_Basket = ({products, basket, total, dispatch}) => {
    const classes = useStyle();
 
    const showBasket = () => {
-      if ( basket.length === 0 ) {
+      if ( basket.length === 0 ) { // IF BASKET IS EMPTY, SHOW MESSAGE
          return (
             <Box className = {classes.box}>
                <Box className = {classes.empty_basket}> 
-                  <Box style = {{marginRight: "10px", marginTop: "6px",}}><ErrorIcon style = {{fontSize: "24px",}}/></Box>
-                  <p style = {{fontSize: "14px"}}>Sepetinizde Ürün Bulunmamaktadır</p>
+                  <Box style = {{marginRight: "10px", marginTop: "6px",}}><ErrorIcon style = {{fontSize: "30px",}}/></Box>
+                  <p style = {{fontSize: "18px", fontFamily: "Open Sans"}}>Basket is empty</p>
                </Box>
             </Box>
          );

@@ -1,24 +1,27 @@
-import { useState, useEffect } from "react";
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
 import Pagination from '@material-ui/lab/Pagination';
-import { connect } from "react-redux";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import clsx from 'clsx';
 import ErrorIcon from '@material-ui/icons/Error';
+
+// OTHER IMPORTS \\
+import { useState } from "react";
+import { connect } from "react-redux";
+
+
 
 import Item from "./Item";
 
 const useStyles = makeStyles({ 
    container: {
-      
       width: "608px",
       height: "1096px",
       borderRadius: "2px",
       "@media screen and (max-width: 720px)": {
-         width: "500px",  
+         width: "100%",  
       },
    },
    header: {
@@ -31,11 +34,14 @@ const useStyles = makeStyles({
    button: {
       width: "60px",
       height: "30px",
-      marginRight: "8px",
       marginBottom: "16px",
+      fontFamily: "Open Sans",
+      borderRadius: "0px",
+      boxShadow: "none",
    },
    item_container: {
       display: "flex",
+      justifyContent: "center",
       flexFlow: "row wrap",
       padding: "20px",
       background: "#FFFFFF",
@@ -52,8 +58,12 @@ const useStyles = makeStyles({
 const theme = createTheme({
    palette: {
       primary: {
-         main: "#1EA4CE",
-         contrastText: "#FFFFFF",
+         main: "#f2f0fd",
+         contrastText: "#1ea4ce",
+      },
+      secondary: {
+         main: "#1ea4ce",
+         contrastText: "#f2f0fd",
       }
    },
 });
@@ -61,35 +71,35 @@ const theme = createTheme({
 const Items = ({products, filteredArray, handleClickVariant}) => {
    const classes = useStyles();
 
-   const [page, setPage] = useState(1);
-   const [pageSize, setPageSize] = useState(16);
-   const [isMug, setIsMug] = useState("mug");
+   const [page, setPage] = useState(1); // PAGE NUMBER
+   const [pageSize, setPageSize] = useState(16); // NUMBER OF ITEMS SHOWED ON THE SCREEN
+   const [isMug, setIsMug] = useState("mug"); // MUG-SHIRT FILTER
 
-   const handleChange = (event, value) => {
+   const handleChange = (event, value) => { // CHANGE THE PAGE NUMBER
       setPage(value);
    };
 
-   const handleMug = () => {
+   const handleMug = () => { // CHANGE THE MUG-SHIRT FILTER TO MUG
       setIsMug("mug");
       setPage(1);
    }
 
-   const handleShirt = () => {
+   const handleShirt = () => { // CHANGE THE MUG-SHIRT FILTER TO SHIRT
       setIsMug("shirt");
       setPage(1);
    }
 
-   const renderComponents = () => {
-      if ( products.length === 0 )
+   const renderComponents = () => { 
+      if ( products.length === 0 ) // WAIT UNTIL PRODUCTS ARRAY IS READY
          return <CircularProgress color="secondary" />
-      else if ( filteredArray.length === 0 )
+      else if ( filteredArray.length === 0 ) // SHOW MESSAGE IF THE FILTER DO NOT RETURN AN ITEM
          return (
             <Box className = {classes.item_container} style = {{color: "#FF2400",}}>
                <Box style = {{marginRight: "10px"}}><ErrorIcon style = {{fontSize: "24px",}}/></Box>
-               <div style = {{marginTop: "2px"}}>There are no products matching the filters!</div> 
+               <div style = {{marginTop: "2px", fontFamily: "Open Sans"}}>There are no products matching the filters!</div> 
             </Box>
          );
-      else 
+      else // SHOW THE WHOLE PAGE
          return (
             <Box className = {classes.item_container}>
                { 
@@ -109,15 +119,15 @@ const Items = ({products, filteredArray, handleClickVariant}) => {
          <ThemeProvider theme = {theme}>
             <Box className = {classes.container}>
                <Box className = {classes.header}>Products</Box>
-               <Box>
-                  <Button className = {classes.button} onClick = {handleMug} color = "primary" variant = "contained">Mug</Button>
-                  <Button className = {classes.button} onClick = {handleShirt} color = "primary" variant = "contained">Shirt</Button>
+               <Box> 
+                  <Button className = {classes.button} onClick = {handleMug} color = { ( isMug === "mug")  ? "secondary" : "primary"} variant = "contained">Mug</Button>
+                  <Button className = {classes.button} onClick = {handleShirt} color = { ( isMug === "shirt")  ? "secondary" : "primary"} variant = "contained">Shirt</Button>
                </Box>
                
                   { renderComponents() } 
                
                <Box className = {classes.pagination}>
-                  <Pagination style = {{marginBottom: "100px"}} size="large" count = {Math.ceil(filteredArray.filter((product) => product.type === isMug).length / pageSize)} page = {page} onChange = {handleChange} color = "primary" shape = "rounded" showFirstButton showLastButton/>
+                  <Pagination style = {{marginBottom: "100px"}} size="large" count = {Math.ceil(filteredArray.filter((product) => product.type === isMug).length / pageSize)} page = {page} onChange = {handleChange} color = "secondary" shape = "rounded" showFirstButton showLastButton/>
                </Box>
             </Box>
          </ThemeProvider>

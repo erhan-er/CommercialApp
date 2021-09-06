@@ -1,9 +1,12 @@
+// ACTION TYPE \\
 import { INCREASE, DECREASE, ADD_ITEM, FILTER_SORT, FILTER_BRAND, FILTER_TAG, SHOW_ALL_BRAND, SHOW_ALL_TAG } from "./actions";
+
+// ACTION PAYLOAD \\
 import { LOW_TO_HIGH, HIGH_TO_LOW, NEW_TO_OLD, OLD_TO_NEW } from "./actions";
 
 // DO NOT IMMUTE DATA \\
-
 function reducer(state, action) {
+
    //** SORTING FUNCTION **\\
    function sortOn( arr = [], prop = "", type = 1) {
       arr.sort(
@@ -24,7 +27,7 @@ function reducer(state, action) {
    if ( action.type === DECREASE ) {
 
       let newTotal = state.total; // GET THE CURRENT TOTAL
-      let newProducts = state.products.map((product) => {
+      let newProducts = state.products.map((product) => { // CREATE A NEW PRODUCTS ARRAY
          if ( product.id === action.payload.id ) {
             newTotal = newTotal - product.price;
             product = {...product, amount: product.amount - 1}            
@@ -32,15 +35,16 @@ function reducer(state, action) {
          return product;
       });
 
-      let newBasket = newProducts.filter((product) => product.amount > 0)
+      let newBasket = newProducts.filter((product) => product.amount > 0) // CREATE A NEW BASKET ARRAY
       
       return {...state, products: newProducts, basket: newBasket, total: newTotal}
    }
 
+   // INCREASE THE AMOUNT OF THE ITEM
    if ( action.type === INCREASE ) {
       
-      let newTotal = state.total;
-      let newProducts = state.products.map((product) => {
+      let newTotal = state.total; // GET THE CURRENT TOTAL
+      let newProducts = state.products.map((product) => { // CREATE A NEW PRODUCTS ARRAY
         if ( product.id === action.payload.id ) {
             newTotal = newTotal + product.price;
             product = {...product, amount: product.amount + 1}
@@ -48,7 +52,7 @@ function reducer(state, action) {
          return product;
       });
 
-      let newBasket = state.basket.map((product) => {
+      let newBasket = state.basket.map((product) => { // CREATE A NEW BASKET ARRAY
          if ( product.id === action.payload.id ) {
             product = {...product, amount: product.amount + 1}
          }
@@ -83,7 +87,7 @@ function reducer(state, action) {
 
    if ( action.type === FILTER_SORT ) { 
       if ( action.payload.sortType === LOW_TO_HIGH ) {
-         let newProducts = [...state.filteredArray];
+         let newProducts = [...state.filteredArray]; 
          return {...state, filteredArray: sortOn(newProducts, "price")}
       }
       if ( action.payload.sortType === HIGH_TO_LOW ) {
@@ -247,19 +251,19 @@ function reducer(state, action) {
    }
    
    if ( action.type === SHOW_ALL_BRAND ) {
-      let newCompanies = state.companies.map((item) => {
+      let newCompanies = state.companies.map((item) => { // CREATE A NEW COMPANIES ARRAY AND MAKE FALSE ALL OF THE COMPANIES' ISCHECKED
          return {...item, isChecked: false}
       });
 
-      let newFilteredArray = [];
+      let newFilteredArray = []; // 
 
-      let count = 0;
+      let count = 0; // GET THE NUMBER OF TAG FILTER
       for ( let i = 0; i < state.tags.length; i++ ) {
          if ( state.tags[i].isChecked )
             count = count + 1;
       }
 
-      if ( count > 0 ) {
+      if ( count > 0 ) { // IF THE NUMBER OF TAG FILTER > 0, FILTER PRODUCTS
          for ( let i = 0; i < state.tags.length; i++ ) {
             for ( let j = 0; j < state.products.length; j++ ) {
                for ( let k = 0; k < state.products[j].tags.length; k++ )
@@ -274,23 +278,24 @@ function reducer(state, action) {
          return {...state, companies: newCompanies, filteredArray: newFilteredArray}
       }
       
+      // IF THE NUMBER OF TAG FILTER === 0, DO NOT FILTER PRODUCTS
       return {...state, companies: newCompanies, filteredArray: [...state.products]}
    }
 
-   if ( SHOW_ALL_TAG ) {
+   if ( SHOW_ALL_TAG ) { // CREATE A NEW TAGS ARRAY AND MAKE FALSE ALL OF THE TAGS' ISCHECKED
       let newTags = state.tags.map((item) => {
          return {...item, isChecked: false}
       });
 
       let newFilteredArray = [];
 
-      let count = 0;
+      let count = 0; // GET THE NUMBER OF BRAND FILTER
       for ( let i = 0; i < state.companies.length; i++ ) {
          if ( state.companies[i].isChecked )
             count = count + 1;
       }
 
-      if ( count > 0 ) {
+      if ( count > 0 ) { // IF THE NUMBER OF BRAND FILTER > 0, FILTER PRODUCTS
          for ( let i = 0; i < state.companies.length; i++ ) {
             for ( let j = 0; j < state.products.length; j++ ) {
                if ( state.companies[i].isChecked ) {
@@ -304,6 +309,7 @@ function reducer(state, action) {
          return {...state, tags: newTags, filteredArray: newFilteredArray}
       }
 
+      // IF THE NUMBER OF BRAND FILTER === 0, DO NOT FILTER PRODUCTS
       return {...state, tags: newTags, filteredArray: [...state.products]}
    }
    return state;

@@ -1,12 +1,14 @@
-import { useState } from "react"
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
+
+// OTHER IMPORTS \\
+import { useState } from "react"
 import BasketIcon from "./img/basket.png";
 import Market from "./img/Logo.png";
 import { connect } from "react-redux";
-
-import Inner_Basket from "../Basket/Inner_Basket";
+import InnerBasket from "../Basket/Inner_Basket";
 
 const useStyles = makeStyles({
    navbar: {
@@ -40,6 +42,9 @@ const useStyles = makeStyles({
       background: "rgb(20, 117, 148)",
       right: "100px",
       borderRadius: "0px",
+      "&:hover" : {
+         background: "rgb(20, 100, 120)",
+      },
       "@media screen and ( max-width: 640px)": {
          right: "20px",
       }
@@ -79,7 +84,7 @@ const Navbar = ({total}) =>{
             <img src={BasketIcon} />
             <div className = {classes.total}>₺ {total.toFixed(2)}</div> 
          </Button>
-         { showBasket ?  ( <Box className = {classes.show_basket} style = {{zIndex: "1"}}><Inner_Basket/></Box>) : <Box/>}
+         { showBasket ?  ( <Box className = {classes.show_basket} style = {{zIndex: "1"}}><InnerBasket/></Box>) : <Box/>}
       </Box>
    );
 

@@ -1,7 +1,10 @@
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
+
+// OTHER IMPORTS \\
 import { connect } from "react-redux";
 import Image from "./img/ayi.png";
 import { ADD_ITEM } from "../Reducer/actions";
@@ -13,6 +16,7 @@ const useStyle = makeStyles({
       width: "124px",
       marginBottom: "22px",
       marginRight: "17px",
+      fontFamily: "Open Sans"
    },
    img_box: {
       height: "124px",

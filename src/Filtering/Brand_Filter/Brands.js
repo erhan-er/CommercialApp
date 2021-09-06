@@ -1,16 +1,15 @@
-import { useState } from 'react';
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-//------CHECKBOX IMPORTS------\\
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
-//---END OF CHECKBOX IMPORTS---\\
 
+// OTHER IMPORTS \\
+import { useState } from 'react';
+import clsx from 'clsx';
 import Brand from "./Brand";
-
 import { connect } from "react-redux";
 import { SHOW_ALL_BRAND } from "../../Reducer/actions";
 
@@ -28,6 +27,9 @@ const useStyle = makeStyles({
       width: "296px",
       height: "274px",
       marginBottom: "24px",
+      "@media screen and (max-width: 1080px)": {
+         width: "40%",
+      },
    },
    inner_box_brands: {
       width: "296px",
@@ -39,6 +41,7 @@ const useStyle = makeStyles({
       flexDirection: "column",
    },
    searchbar: {
+      fontFamily: "Open Sans",
       height: "44px",
       width: "244px",
       border: "2px solid #E0E0E0",
@@ -83,12 +86,12 @@ const Brands = ({companies, companyCount, products, dispatch}) => {
 
    const filteredCompanies = filterBrands( companies, searchQuery );
    
-   const renderComponent = () => {
+   const renderComponent = () => { // WAIT UNTIL COMPANYCOUNT IS READY
       if ( companyCount.length === 0 )
          return <CircularProgress color="primary" />
       else {
          return (
-            <div>
+            <Box className = {classes.inner_box_brands}>
                <input value = {searchQuery} onInput = {e => {setSearchQuery(e.target.value)}} type="text" id = "brandSearch" name = "brandSearch" placeholder = "Search Brand" className = {classes.searchbar}/>
                <Box className = {clsx(classes.scrollbar, classes['*'])}>
                   <FormGroup >
@@ -100,7 +103,7 @@ const Brands = ({companies, companyCount, products, dispatch}) => {
                      })} 
                   </FormGroup>
                </Box>
-            </div>
+            </Box>
             
          );
       }
@@ -108,9 +111,7 @@ const Brands = ({companies, companyCount, products, dispatch}) => {
    return (
       <Box className = {classes.outer_box_brands}>
          <div className = {classes.header}>Brands</div>
-         <Box className = {classes.inner_box_brands}>
             { renderComponent() }
-         </Box>
       </Box>
    );
 }

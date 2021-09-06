@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+// MATERIAL UI IMPORTS \\
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+
+// OTHER IMPORTS \\
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import  { FILTER_BRAND } from "../../Reducer/actions"
 
@@ -13,12 +16,12 @@ const Brand = ({id, slug, name, address, city, state, zip, account, contact, isC
       setAllChecked(false);
    }
 
-   useEffect(() => {
+   useEffect(() => { // IF ALL CHECKED, THEN UNCHECK OTHER FILTERS
       if ( allChecked )
          setIsCheckedState(false);
    },[allChecked]);
    return (
-      <FormControlLabel
+      <FormControlLabel 
          control = {<Checkbox 
                         checked = {isCheckedState} 
                         onChange = {() => {filter(); handleChange()}} color="primary"/>} 

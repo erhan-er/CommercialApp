@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import './App.css';
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
+// OTHER IMPORTS \\
+import { useState, useEffect } from "react";
+import './App.css';
 import axios from "axios";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-
 import Navbar from "./Navbar/Navbar";
 import Items from "./Listed_Items/Items";
 import Filtering from "./Filtering/Filtering";

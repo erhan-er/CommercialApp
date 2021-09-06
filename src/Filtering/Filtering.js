@@ -1,6 +1,8 @@
-import Box from '@material-ui/core/Box';
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
+// OTHER IMPORTS \\
 import Sorting from "./Sort_Filter/Sorting";
 import Brands from "./Brand_Filter/Brands";
 import Tags from "./Tag_Filter/Tags";
@@ -14,7 +16,7 @@ const useStyle = makeStyles({
          justifyContent: "space-evenly",
          flexFlow: "row wrap",
       },
-      "@media screen and (max-width: 920px)": {
+      "@media screen and (max-width: 720px)": {
          display: "block",
       },
    },

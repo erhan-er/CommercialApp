@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+// MATERIAL UI IMPORTS \\
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { connect } from "react-redux";
 
+// OTHER IMPORTS \\
+import { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { FILTER_TAG } from "../../Reducer/actions";
 
 const Tag = ({tagName, isChecked, index, tagCount, filter, allChecked, setAllChecked}) => {
@@ -13,7 +15,7 @@ const Tag = ({tagName, isChecked, index, tagCount, filter, allChecked, setAllChe
       setAllChecked(false);
    }
 
-   useEffect(() => {
+   useEffect(() => {  // IF ALL CHECKED, THEN UNCHECK OTHER FILTERS
       if ( allChecked )
          setIsCheckedState(false);
    },[allChecked]);

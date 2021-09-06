@@ -1,13 +1,12 @@
+// MATERIAL UI IMPORTS \\
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-
-//--------RADIO IMPORTS--------\\
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-//-----END OF RADIO IMPORTS-----\\
 
+// OTHER IMPORTS \\
 import { connect } from "react-redux";
 import { FILTER_SORT } from "../../Reducer/actions";
 import { LOW_TO_HIGH, HIGH_TO_LOW, NEW_TO_OLD, OLD_TO_NEW } from "../../Reducer/actions";
@@ -26,6 +25,9 @@ const useStyle = makeStyles({
       width: "296px",
       height: "274px",
       marginBottom: "24px",
+      "@media screen and (max-width: 1080px)": {
+         width: "40%",
+      },
    },
    inner_box_sorting: {
       width: "296px",
